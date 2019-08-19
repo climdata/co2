@@ -55,9 +55,11 @@ require("ggplot2")
 ```
 
 ```r
-mp <- ggplot()
-mp + geom_line(aes(y=co2new$CO2, x=co2new$time), color="blue") +
-     xlab("Year") + ylab("CO2 [ppm]")
+co2 <- read.csv("./csv/monthly_co2.csv", sep=",")
+mp <- ggplot() +
+      geom_line(aes(y=co2$CO2, x=co2$time), color="blue") +
+      xlab("Year") + ylab("CO2 [ppm]")
+mp
 ```
 
 ![](README_files/figure-html/plot-1.png)<!-- -->

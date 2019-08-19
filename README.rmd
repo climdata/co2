@@ -48,8 +48,9 @@ write.table(co2new, file = "./csv/monthly_co2.csv", append = FALSE, quote = TRUE
 ```{r plot, echo=TRUE}
 require("ggplot2")
 co2 <- read.csv("./csv/monthly_co2.csv", sep=",")
-mp <- ggplot()
-mp + geom_line(aes(y=co2$CO2, x=co2$time), color="blue") +
-     xlab("Year") + ylab("CO2 [ppm]")
+mp <- ggplot() +
+      geom_line(aes(y=co2$CO2, x=co2$time), color="blue") +
+      xlab("Year") + ylab("CO2 [ppm]")
+mp
 
 ```
