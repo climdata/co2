@@ -8,12 +8,13 @@ output:
   pdf_document: default
 ---
 
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 ## CO2 Serie
 
-
-```sh
+```{sh downloads}
  [ -f ./download/monthly_in_situ_co2_mlo.csv ] && mv -f ./download/monthly_in_situ_co2_mlo.csv ./download/monthly_in_situ_co2_mlo.csv.bck
  wget -q -P download http://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/in_situ_co2/monthly/monthly_in_situ_co2_mlo.csv
  sed -i '/^"/d' ./download/monthly_in_situ_co2_mlo.csv
@@ -22,8 +23,7 @@ output:
 
 
 
-
-```r
+```{r convert}
 co2 <- read.csv("./download/monthly_in_situ_co2_mlo.csv", sep=",")
 names(co2)[names(co2) == "Yr"] <- "year"
 names(co2)[names(co2) == "Mn"] <- "month"
@@ -39,18 +39,8 @@ write.table(co2new, file = "./csv/monthly_co2.csv", append = FALSE, quote = TRUE
             col.names = TRUE, qmethod = "escape", fileEncoding = "UTF-8")
 ```
 
-
-```r
+```{r plot, echo=TRUE}
 require("ggplot2")
-```
-
-```
-## Loading required package: ggplot2
-```
-
-```r
 mp <- ggplot()
 mp + geom_line(aes(y=co2new$CO2, x=co2new$time), color="blue") 
 ```
-
-![](README_files/figure-html/plot-1.png)<!-- -->
