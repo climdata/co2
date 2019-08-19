@@ -12,6 +12,10 @@ output:
 
 ## CO2 Serie
 
+Download data from:
+
+Citation: C. D. Keeling, S. C. Piper, R. B. Bacastow, M. Wahlen, T. P. Whorf, M. Heimann, and H. A. Meijer, Exchanges of atmospheric CO2 and 13CO2 with the terrestrial biosphere and oceans from 1978 to 2000. I. Global aspects, SIO Reference Series, No. 01-06, Scripps Institution of Oceanography, San Diego, 88 pages, 2001. http://escholarship.org/uc/item/09v319r9
+
 
 ```sh
  [ -f ./download/monthly_in_situ_co2_mlo.csv ] && mv -f ./download/monthly_in_situ_co2_mlo.csv ./download/monthly_in_situ_co2_mlo.csv.bck
@@ -20,7 +24,7 @@ output:
  sed -i '2d;3d' ./download/monthly_in_situ_co2_mlo.csv
 ```
 
-
+## Convert to standard format
 
 
 ```r
@@ -39,6 +43,8 @@ write.table(co2new, file = "./csv/monthly_co2.csv", append = FALSE, quote = TRUE
             col.names = TRUE, qmethod = "escape", fileEncoding = "UTF-8")
 ```
 
+## Plot diagramm
+
 
 ```r
 require("ggplot2")
@@ -50,7 +56,8 @@ require("ggplot2")
 
 ```r
 mp <- ggplot()
-mp + geom_line(aes(y=co2new$CO2, x=co2new$time), color="blue") 
+mp + geom_line(aes(y=co2new$CO2, x=co2new$time), color="blue") +
+     xlab("Year") + ylab("CO2 [ppm]")
 ```
 
 ![](README_files/figure-html/plot-1.png)<!-- -->

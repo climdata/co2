@@ -14,6 +14,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## CO2 Serie
 
+Download data from:
+
+Citation: C. D. Keeling, S. C. Piper, R. B. Bacastow, M. Wahlen, T. P. Whorf, M. Heimann, and H. A. Meijer, Exchanges of atmospheric CO2 and 13CO2 with the terrestrial biosphere and oceans from 1978 to 2000. I. Global aspects, SIO Reference Series, No. 01-06, Scripps Institution of Oceanography, San Diego, 88 pages, 2001. http://escholarship.org/uc/item/09v319r9
+
 ```{sh downloads}
  [ -f ./download/monthly_in_situ_co2_mlo.csv ] && mv -f ./download/monthly_in_situ_co2_mlo.csv ./download/monthly_in_situ_co2_mlo.csv.bck
  wget -q -P download http://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/in_situ_co2/monthly/monthly_in_situ_co2_mlo.csv
@@ -21,7 +25,7 @@ knitr::opts_chunk$set(echo = TRUE)
  sed -i '2d;3d' ./download/monthly_in_situ_co2_mlo.csv
 ```
 
-
+## Convert to standard format
 
 ```{r convert}
 co2 <- read.csv("./download/monthly_in_situ_co2_mlo.csv", sep=",")
@@ -39,8 +43,13 @@ write.table(co2new, file = "./csv/monthly_co2.csv", append = FALSE, quote = TRUE
             col.names = TRUE, qmethod = "escape", fileEncoding = "UTF-8")
 ```
 
+## Plot diagramm
+
 ```{r plot, echo=TRUE}
 require("ggplot2")
+co2 <- read.csv("./csv/monthly_co2.csv", sep=",")
 mp <- ggplot()
-mp + geom_line(aes(y=co2new$CO2, x=co2new$time), color="blue") 
+mp + geom_line(aes(y=co2$CO2, x=co2$time), color="blue") +
+     xlab("Year") + ylab("CO2 [ppm]")
+
 ```
