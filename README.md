@@ -34,7 +34,8 @@ names(co2)[names(co2) == "Mn"] <- "month"
 co2 <- subset(co2, -99 < co2$CO2)
 
 co2new <-co2[,c("year","month","CO2")]
-co2new$time <- signif(co2new$year + (co2new$month-0.5)/12, digits=6)
+co2new$ts <- signif(co2new$year + (co2new$month-0.5)/12, digits=6)
+co2new$time <- paste(co2new$year,co2new$month, '15 00:00:00', sep='-')
 
 co2new <- co2new[order(co2new$time),]
 
@@ -54,10 +55,14 @@ require("ggplot2")
 ## Loading required package: ggplot2
 ```
 
+```
+## Warning: package 'ggplot2' was built under R version 3.5.3
+```
+
 ```r
 co2 <- read.csv("./csv/monthly_co2.csv", sep=",")
 mp <- ggplot() +
-      geom_line(aes(y=co2$CO2, x=co2$time), color="blue") +
+      geom_line(aes(y=co2$CO2, x=co2$ts), color="blue") +
       xlab("Year") + ylab("CO2 [ppm]")
 mp
 ```
